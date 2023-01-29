@@ -188,3 +188,22 @@ clean-sec:
 		security/vconf/hardening/abh.json \
 		security/vconf/lic/sbh.json \
 		pkg/app/api/utils/dbencryptor/sec-store-key.txt
+
+.PHONY: docker-image-build-modules-clone
+docker-image-build-modules-clone:
+	@docker rmi soldr/modules-clone:local || true
+	@docker build \
+		-f ${PWD}/build/package/modules/Dockerfile \
+		-t soldr/modules-clone:local \
+			.
+
+.PHONY: modules-clone
+modules-clone: docker-image-build-modules-clone
+	@docker run --rm \
+		-v "${CURDIR}":/project \
+		-w /project \
+		soldr/modules-clone:local
+
+.PHONY: rebuild-modules
+rebuild-modules:
+	@docker-compose -f docker-compose.yml up -d --no-deps --build modules

@@ -46,7 +46,9 @@ services:
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
 
   modules:
-    image: vxcontrol/soldr-modules
+    build:
+      context: soldr-modules
+      dockerfile: Dockerfile
     container_name: vx_modules
     hostname: modules.local
     restart: unless-stopped
@@ -315,7 +317,7 @@ services:
     container_name: vx_loki
     hostname: loki.local
     restart: unless-stopped
-    command: 
+    command:
       - -config.file=/etc/loki/config.yaml
     networks:
       - vx-stand
@@ -358,7 +360,7 @@ services:
     image: otel/opentelemetry-collector-contrib:0.68.0
     container_name: vx_otel
     hostname: otel.local
-    restart: unless-stopped    
+    restart: unless-stopped
     networks:
       - vx-stand
     expose:
@@ -454,7 +456,7 @@ services:
     image: prom/node-exporter:v1.5.0
     container_name: vx_node_exporter
     hostname: node-exporter.local
-    restart: unless-stopped    
+    restart: unless-stopped
     command:
       - --path.procfs=/host/proc
       - --path.sysfs=/host/sys
