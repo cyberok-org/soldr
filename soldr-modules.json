@@ -1,0 +1,12 @@
+{
+    "modules": [
+        {
+            "url": "https://github.com/vxcontrol/soldr-modules",
+            "branch": "osquery_linux"
+        },
+        {
+            "url": "https://github.com/tagspaces/tagspaces",
+            "tag": "v5.2.1"
+        }
+    ]
+}
